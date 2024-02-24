@@ -1,0 +1,19 @@
+name: Slack通知
+
+on:
+  - push
+
+jobs:
+  slack-notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: notify-slack
+        uses: slackapi/slack-github-action@v1
+        with:
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          channel: '#通知チャンネル'
+          text: "ワークフロー '${{ github.workflow }}' が完了しました。"
+          color: '#0000FF'
