@@ -1,4 +1,4 @@
-name: Slack通知
+name: Notify Slack
 
 on:
   push:
@@ -6,16 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  slack-notify:
+  notify_slack:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
 
       - name: notify-slack
-        uses: slackapi/slack-github-action@v1
+        uses: slackapi/slack-github-action@v1.26.0
         with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          channel: '#actions-bot'
-          text: "ワークフロー '${{ github.workflow }}' が完了しました。"
-          color: '#0000FF'
+          payload: |
+            {
+              "key": "value",
+              "foo": "bar"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
